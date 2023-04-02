@@ -31,9 +31,7 @@ namespace Pexeso.ViewModels
                 for (int j=0; j<columns; j++)
                 {
                     Grid wrapper = new Grid();
-                    int index = j + i * j;
-                    if (i * j != 0)
-                        index += 1;
+                    int index = columns*i + j;
                     Button newCardPanel = DrawCard(index);
                     wrapper.Children.Add(newCardPanel);
                     Grid.SetRow(wrapper, i);
