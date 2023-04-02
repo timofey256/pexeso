@@ -30,9 +30,9 @@ namespace Pexeso.Models
                 cards.Add(new Card(brush));
             }
 
-            if (cardsAmount / 2 != 0)
+            if (cardsAmount % 2 != 0)
                 cards.Add(new Card(GetColor()));
-
+            
             ShuffleCards(cards);
             return cards;
         }
@@ -58,8 +58,9 @@ namespace Pexeso.Models
 
         private static SolidColorBrush GetColor()
         {
-            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255),
-                      (byte)r.Next(1, 255), (byte)r.Next(1, 233)));
+            Random rand = new Random();
+            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb((byte)rand.Next(1, 255),
+                      (byte)rand.Next(1, 255), (byte)rand.Next(1, 233)));
             return brush;
         }
     }

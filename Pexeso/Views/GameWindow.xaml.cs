@@ -21,7 +21,8 @@ namespace Pexeso.Views
     public partial class GameWindow : Window
     {
         private readonly bool _areTwoPlayes;
-        public GameWindow(int rowAmount=6, int columnAmount=6, bool areTwoPlayes = false)
+        private static Button? firstCard = null;
+        public GameWindow(int rowAmount=2, int columnAmount=2, bool areTwoPlayes = false)
         {
             InitializeComponent();
 
@@ -29,6 +30,29 @@ namespace Pexeso.Views
             Grid board = GameWindowDrawer.DrawBoard(rowAmount, columnAmount);
 
             GameBoardGrid.Children.Add(board);
-        }   
+        }
+
+        public static void onRotateCard(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            int cardIndex = (int)button.Tag;
+            GameWindowDrawer.RotateCard(button, cardIndex);
+
+            if (firstCard is null)
+            {
+                firstCard = button;
+            }
+            else if (!ReferenceEquals(firstCard, button) && firstCard.Background == button.Background) 
+            {
+                button.IsEnabled = false;
+                firstCard.IsEnabled = false;
+            }
+            else 
+            {
+                GameWindowDrawer.RotateCard(button, cardIndex);
+                GameWindowDrawer.RotateCard(firstCard, (int)firstCard.Tag);
+                firstCard = null;
+            }
+        }
     }
 }

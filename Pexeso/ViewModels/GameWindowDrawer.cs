@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using Accessibility;
 using Pexeso.Models;
+using Pexeso.Views;
 
 namespace Pexeso.ViewModels
 {
     public static class GameWindowDrawer
     {
+        private static readonly SolidColorBrush _cardBackground = Brushes.Black;
+        private static List<Card> cards;
         public static Grid DrawBoard(int rows, int columns)
         {
-            List<Card> cards = CardsManager.GenerateDeck(rows * columns);
+            cards = CardsManager.GenerateDeck(rows * columns);
 
             Grid board = getBoardStructure(rows, columns);
             Grid.SetColumn(board, 1);
@@ -23,10 +30,15 @@ namespace Pexeso.ViewModels
             { 
                 for (int j=0; j<columns; j++)
                 {
-                    Grid newCardPanel = DrawCard(cards[j+i*j]);
-                    Grid.SetRow(newCardPanel, i);
-                    Grid.SetColumn(newCardPanel, j);
-                    board.Children.Add(newCardPanel);
+                    Grid wrapper = new Grid();
+                    int index = j + i * j;
+                    if (i * j != 0)
+                        index += 1;
+                    Button newCardPanel = DrawCard(index);
+                    wrapper.Children.Add(newCardPanel);
+                    Grid.SetRow(wrapper, i);
+                    Grid.SetColumn(wrapper, j);
+                    board.Children.Add(wrapper);
                 }
             }
 
@@ -49,14 +61,27 @@ namespace Pexeso.ViewModels
             return board;
         }
 
-        private static Grid DrawCard(Card card)
+        private static Button DrawCard(int index)
         {
-            Grid cardPanel = new Grid();
-            cardPanel.Width = 40;
-            cardPanel.Height = 70;
-            cardPanel.Margin = new System.Windows.Thickness(10, 10, 10, 10);
-            cardPanel.Background = card.Color;
-            return cardPanel;
+            Button cardRotatingButton = new Button();
+            cardRotatingButton.Width = 40;
+            cardRotatingButton.Height = 70;
+            cardRotatingButton.Margin = new System.Windows.Thickness(10, 10, 10, 10);
+            cardRotatingButton.Tag = index;
+            cardRotatingButton.Cursor = Cursors.Hand;
+            cardRotatingButton.Background = _cardBackground;
+
+            cardRotatingButton.Click += new RoutedEventHandler(GameWindow.onRotateCard);
+
+            return cardRotatingButton;
+        }
+
+        public static void RotateCard(Button cardPanel, int cardIndex)
+        {
+            if (cardPanel.Background == _cardBackground)
+                cardPanel.Background = cards[cardIndex].Color;
+            else
+                cardPanel.Background = _cardBackground;
         }
     }
 }
