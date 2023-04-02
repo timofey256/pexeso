@@ -28,8 +28,32 @@ namespace Pexeso
 
         private void onStartNewGame(object sender, RoutedEventArgs e)
         {
-            GameWindow gameWindow = new GameWindow();
-            gameWindow.Show();
+            int columns, rows;
+            bool areTwoPlayers = areTwoPlayersCheckBox.IsChecked ?? false;
+
+            if (int.TryParse(columnsNumber.Text, out columns) &&
+                int.TryParse(rowsNumber.Text, out rows))
+            {
+                if ((columns * rows) % 2 != 0)
+                {
+                    ShowErrorMessage("Odd amount of cells.");
+                }
+                else
+                {
+                    GameWindow gameWindow = new GameWindow(columns, rows, areTwoPlayers);
+                    gameWindow.Show();
+                }
+            }
+            else
+            {
+                ShowErrorMessage("Invalid data. Non-integer columns and/or rows number.");
+            }
+
+        }
+
+        private void ShowErrorMessage(string errorMessage)
+        {
+            ErrorMessageLabel.Content = $"Error: {errorMessage}";
         }
     }
 }

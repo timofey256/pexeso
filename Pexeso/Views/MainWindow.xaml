@@ -13,8 +13,9 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
@@ -25,9 +26,80 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Text="Pexeso" />
+        <Border Grid.Row="1"
+                Grid.Column="1"
+                BorderBrush="CadetBlue" 
+                CornerRadius="4"
+                BorderThickness="1"
+                Width="300">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="Number of rows:"/>
+
+                <!-- input -->
+                <TextBox
+                    x:Name="rowsNumber"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="70"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    Margin="20 0 0 0"/>
+
+                <Label 
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="Number of columns:"/>
+
+                <!-- input -->
+                <TextBox
+                    x:Name="columnsNumber"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="70"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    Margin="20 0 0 0"/>
+
+                <Label 
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="Two players:"/>
+
+                <CheckBox
+                    x:Name="areTwoPlayersCheckBox"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Margin="20 0 0 0"/>
+            </Grid>
+
+        </Border>
+
+        <Label
+            Name="ErrorMessageLabel"
+            Grid.Row="2"
+            Grid.Column="1"
+            Foreground="Red"
+            HorizontalAlignment="Center"/>
+
         <Button
             Grid.Column="1"
-            Grid.Row="1"
+            Grid.Row="3"
             
             Width="200"
             Height="50"
