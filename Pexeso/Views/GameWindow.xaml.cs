@@ -24,8 +24,11 @@ namespace Pexeso.Views
     public partial class GameWindow : Window
     {
         private readonly bool _areTwoPlayes;
+        private static bool? isFirstPlayerTurn = null;  // 3 states. null: there's only 1 player. true: first player turn. false: second player turn.
+
         private static Button? firstCard = null;
         private static int cardsLeft;
+        
         public GameWindow(int rowAmount=2, int columnAmount=2, bool areTwoPlayes = false)
         {
             InitializeComponent();
@@ -33,6 +36,18 @@ namespace Pexeso.Views
             _areTwoPlayes = areTwoPlayes;
             cardsLeft = rowAmount * columnAmount;
             Grid board = GameWindowDrawer.DrawBoard(rowAmount, columnAmount);
+
+            if (areTwoPlayes)
+            {
+                GameWindowDrawer.InitializePlayers("Player #1", "Player #2");
+                Grid player1 = GameWindowDrawer.DrawScorePanel(0, 0, 0);
+                Grid player2 = GameWindowDrawer.DrawScorePanel(0, 2, 0);
+
+                WindowGrid.Children.Add(player1);
+                WindowGrid.Children.Add(player2);
+
+                isFirstPlayerTurn = true;
+            }
 
             GameBoardGrid.Children.Add(board);
         }
@@ -52,6 +67,15 @@ namespace Pexeso.Views
                 button.IsEnabled = false;
                 firstCard.IsEnabled = false;
                 cardsLeft -= 2;
+
+                if (isFirstPlayerTurn == true) {
+                    GameWindowDrawer.IncreaseScore(0);
+                }
+                else if (isFirstPlayerTurn == false)
+                {
+                    GameWindowDrawer.IncreaseScore(1);
+                }
+
                 ValidateCardsLeft();
             }
             else 

@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:Pexeso.Views"
         mc:Ignorable="d"
         Title="GameWindow" Height="450" Width="800">
-    <Grid Background="AliceBlue">
+    <Grid 
+        Name="WindowGrid"
+        Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -30,5 +32,6 @@
             x:Name="GameBoardGrid"
             Grid.Row="1"
             Grid.Column="1"/>
+
     </Grid>
 </Window>
